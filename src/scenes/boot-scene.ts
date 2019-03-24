@@ -47,11 +47,7 @@ export class BootScene extends Phaser.Scene {
     );
 
     // load out package
-    this.load.pack(
-      "preload",
-      "./src/games/space-shooter/assets/pack.json",
-      "preload"
-    );
+    this.load.pack("preload", "./src/assets/pack.json", "preload");
   }
 
   update(): void {

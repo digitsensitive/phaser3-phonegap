@@ -4,7 +4,7 @@
       {
         "type": "image",
         "key": "player",
-        "url": "./src/games/space-shooter/assets/sprites/player.png"
+        "url": "./src/assets/sprites/player.png"
       }
     ]
   }

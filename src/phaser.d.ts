@@ -65861,6 +65861,8 @@ declare namespace Phaser {
          */
         physics: Phaser.Physics.Arcade.ArcadePhysics;
 
+        plugins: Phaser.Scene.PluginManager;
+
         /**
          * A scene level Impact Physics Plugin.
          * This property will only be available if defined in the Scene Injection Map, the plugin is installed and configured.

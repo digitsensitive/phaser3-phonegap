@@ -9,6 +9,7 @@ export class Player extends Phaser.GameObjects.Image {
   private cursors: Phaser.Input.Keyboard.CursorKeys;
   private currentSpeed: number;
   private maxSpeed: number;
+  private joystick: any;
 
   constructor(params) {
     super(params.scene, params.x, params.y, params.key);
@@ -31,7 +32,18 @@ export class Player extends Phaser.GameObjects.Image {
   }
 
   private initInput(): void {
-    this.cursors = this.scene.input.keyboard.createCursorKeys();
+    this.joystick = this.scene.plugins
+      .get("rexVirtualJoyStick")
+      .add(this.scene, {
+        x: this.scene.sys.canvas.width / 2,
+        y: this.scene.sys.canvas.height - 50,
+        radius: 50,
+        base: this.scene.add.circle(0, 0, 30, 0x888888),
+        thumb: this.scene.add.circle(0, 0, 15, 0xcccccc),
+        dir: 1
+      });
+
+    this.cursors = this.joystick.createCursorKeys();
   }
 
   private initPhysics(): void {

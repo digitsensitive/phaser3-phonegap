@@ -6,6 +6,8 @@
  */
 
 import "phaser";
+import VirtualJoyStickPlugin from "./plugins/virtualjoystick/virtualjoystick-plugin.js";
+
 import { BootScene } from "./scenes/boot-scene";
 import { GameScene } from "./scenes/game-scene";
 
@@ -21,7 +23,7 @@ const config: GameConfig = {
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
   type: Phaser.AUTO,
-  parent: "game",
+  parent: "app",
   scene: [BootScene, GameScene],
   input: {
     keyboard: true
@@ -32,6 +34,15 @@ const config: GameConfig = {
       gravity: { y: 0 },
       debug: false
     }
+  },
+  plugins: {
+    global: [
+      {
+        key: "rexVirtualJoyStick",
+        plugin: VirtualJoyStickPlugin,
+        start: true
+      }
+    ]
   },
   backgroundColor: "#151a21",
   render: { pixelArt: true, antialias: false }
