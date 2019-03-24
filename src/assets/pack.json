@@ -1,0 +1,11 @@
+{
+  "preload": {
+    "files": [
+      {
+        "type": "image",
+        "key": "player",
+        "url": "./src/games/space-shooter/assets/sprites/player.png"
+      }
+    ]
+  }
+}
