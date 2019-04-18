@@ -5,6 +5,45 @@
         "type": "image",
         "key": "player",
         "url": "./src/assets/sprites/player.png"
+      },
+      {
+        "type": "image",
+        "key": "enemy",
+        "url": "./src/assets/sprites/enemy.png"
+      },
+      {
+        "type": "image",
+        "key": "health-bar",
+        "url": "./src/assets/images/health-bar.png"
+      },
+      {
+        "type": "image",
+        "key": "bullet",
+        "url": "./src/assets/images/bullet.png"
+      },
+      {
+        "type": "image",
+        "key": "health-bar-color",
+        "url": "./src/assets/images/health-bar-color.png"
+      },
+      {
+        "type": "image",
+        "key": "spark",
+        "url": "./src/assets/images/spark.png"
+      },
+      {
+        "type": "json",
+        "key": "animationJSON",
+        "url": "./src/assets/animations/animations.json"
+      },
+      {
+        "type": "spritesheet",
+        "key": "explosion1",
+        "url": "./src/assets/sprites/explosion1.png",
+        "frameConfig": {
+          "frameWidth": 38,
+          "frameHeight": 38
+        }
       }
     ]
   }

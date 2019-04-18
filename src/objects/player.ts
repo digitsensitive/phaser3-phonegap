@@ -5,11 +5,15 @@
  * @license      Digitsensitive
  */
 
+import { Bullet } from "./bullet";
+
 export class Player extends Phaser.GameObjects.Image {
-  private cursors: Phaser.Input.Keyboard.CursorKeys;
-  private currentSpeed: number;
-  private maxSpeed: number;
-  private joystick: any;
+  private bullets: Phaser.GameObjects.Group;
+  private reloadTime: number;
+
+  public getBullets(): Phaser.GameObjects.Group {
+    return this.bullets;
+  }
 
   constructor(params) {
     super(params.scene, params.x, params.y, params.key);
@@ -23,27 +27,24 @@ export class Player extends Phaser.GameObjects.Image {
   }
 
   private initVariables(): void {
-    this.currentSpeed = 0;
-    this.maxSpeed = 300;
+    this.bullets = this.scene.add.group({
+      runChildUpdate: true
+    });
+    this.reloadTime = 10;
   }
 
   private initImage(): void {
     this.setOrigin(0.5, 0.5);
+    this.setScale(1.2);
+    this.setInteractive();
   }
 
   private initInput(): void {
-    this.joystick = this.scene.plugins
-      .get("rexVirtualJoyStick")
-      .add(this.scene, {
-        x: this.scene.sys.canvas.width / 2,
-        y: this.scene.sys.canvas.height - 50,
-        radius: 50,
-        base: this.scene.add.circle(0, 0, 30, 0x888888),
-        thumb: this.scene.add.circle(0, 0, 15, 0xcccccc),
-        dir: 1
-      });
-
-    this.cursors = this.joystick.createCursorKeys();
+    this.scene.input.setDraggable(this);
+    this.scene.input.on("drag", function(pointer, gameObject, dragX, dragY) {
+      gameObject.x = dragX;
+      gameObject.y = dragY;
+    });
   }
 
   private initPhysics(): void {
@@ -52,37 +53,35 @@ export class Player extends Phaser.GameObjects.Image {
   }
 
   update(): void {
-    this.handleFlying();
+    this.handleShooting();
   }
 
-  private handleFlying(): void {
-    if (
-      this.cursors.right.isDown &&
-      this.x < this.scene.sys.canvas.width - this.width / 2
-    ) {
-      if (this.currentSpeed < this.maxSpeed) {
-        this.currentSpeed += 40;
-      }
-      this.body.setVelocityX(this.currentSpeed);
-    } else if (this.cursors.left.isDown && this.x > this.width / 2) {
-      if (this.currentSpeed < this.maxSpeed) {
-        this.currentSpeed += 40;
-      }
-      this.body.setVelocityX(-this.currentSpeed);
-    } else {
-      this.body.setVelocityX(0);
-      this.currentSpeed = 0;
+  private handleShooting(): void {
+    this.reloadTime--;
+    if (this.reloadTime < 0) {
+      this.bullets.add(
+        new Bullet({
+          scene: this.scene,
+          x: this.x - this.width / 3,
+          y: this.y - this.height,
+          key: "bullet",
+          bulletProperties: {
+            speed: -900
+          }
+        })
+      );
+      this.bullets.add(
+        new Bullet({
+          scene: this.scene,
+          x: this.x + this.width / 3,
+          y: this.y - this.height,
+          key: "bullet",
+          bulletProperties: {
+            speed: -900
+          }
+        })
+      );
+      this.reloadTime = 10;
     }
-  }
-
-  public gotHurt() {
-    // update lives
-    let currentLives = this.scene.registry.get("lives");
-    this.scene.registry.set("lives", currentLives - 1);
-    this.scene.events.emit("livesChanged");
-
-    // reset position
-    this.x = this.scene.sys.canvas.width / 2;
-    this.y = this.scene.sys.canvas.height - 40;
   }
 }
