@@ -58,6 +58,9 @@ export class BootScene extends Phaser.Scene {
 
     // load out package
     this.load.pack("preload", "./src/assets/pack.json", "preload");
+
+    // init registry
+    this.initRegistry();
   }
 
   update(): void {
@@ -76,5 +79,13 @@ export class BootScene extends Phaser.Scene {
       20
     );
     this.progressBar = this.add.graphics();
+  }
+
+  /**
+   * Build-in global game data manager to exchange data between scenes.
+   * Here we initialize our variables with a key.
+   */
+  private initRegistry(): void {
+    this.registry.set("points", 0);
   }
 }

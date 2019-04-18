@@ -19,7 +19,7 @@ const config: GameConfig = {
     width: 360,
     height: 640,
     zoom: 1,
-    mode: Phaser.Scale.FIT,
+    mode: Phaser.Scale.RESIZE,
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
   type: Phaser.AUTO,
@@ -35,7 +35,7 @@ const config: GameConfig = {
       debug: false
     }
   },
-  backgroundColor: "#151a21",
+  backgroundColor: "#0f1528",
   render: { pixelArt: true, antialias: false }
 };
 

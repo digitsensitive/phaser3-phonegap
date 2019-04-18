@@ -64,11 +64,18 @@ export class Enemy extends Phaser.GameObjects.PathFollower {
     this.setScale(1.2);
     this.life--;
     if (this.life === 0) {
+      this.addPoints();
       this.anims.play("explosion1", true);
       var anim = this.scene.anims.get("explosion1");
       anim.on("complete", function(currentAnim, currentFrame, sprite) {
         sprite.destroy();
       });
     }
+  }
+
+  private addPoints(): void {
+    let getCurrentPoints = this.scene.registry.get("points");
+    this.scene.registry.set("points", getCurrentPoints + 20);
+    this.scene.events.emit("pointsChanged");
   }
 }
